@@ -9575,56 +9575,51 @@ fun! s:NetrwCursor()
   endif
 "  call Dfunc("s:NetrwCursor() ft<".&ft."> liststyle=".w:netrw_liststyle." g:netrw_cursor=".g:netrw_cursor." s:netrw_usercuc=".s:netrw_usercuc." s:netrw_usercul=".s:netrw_usercul)
 
-  if &ft != "netrw"
-   " if the current window isn't a netrw directory listing window, then use user cursorline/column
-   " settings.  Affects when netrw is used to read/write a file using scp/ftp/etc.
-"   call Decho("case ft!=netrw: use user cul,cuc")
-   let &l:cursorline   = s:netrw_usercul
-   let &l:cursorcolumn = s:netrw_usercuc
-
-  elseif g:netrw_cursor == 4
-   " all styles: cursorline, cursorcolumn
-"   call Decho("case g:netrw_cursor==4: setl cul cuc")
-   setl cursorline
-   setl cursorcolumn
-
-  elseif g:netrw_cursor == 3
-   " thin-long-tree: cursorline, user's cursorcolumn
-   " wide          : cursorline, cursorcolumn
-   if w:netrw_liststyle == s:WIDELIST
-"    call Decho("case g:netrw_cursor==3 and wide: setl cul cuc")
+  if &ft ==? "netrw"
+    if g:netrw_cursor == 4
+    " all styles: cursorline, cursorcolumn
+  "   call Decho("case g:netrw_cursor==4: setl cul cuc")
     setl cursorline
     setl cursorcolumn
-   else
-"    call Decho("case g:netrw_cursor==3 and not wide: setl cul (use user's cuc)")
-    setl cursorline
-    let &l:cursorcolumn   = s:netrw_usercuc
-   endif
 
-  elseif g:netrw_cursor == 2
-   " thin-long-tree: cursorline, user's cursorcolumn
-   " wide          : cursorline, user's cursorcolumn
-"   call Decho("case g:netrw_cursor==2: setl cuc (use user's cul)")
-   let &l:cursorcolumn = s:netrw_usercuc
-   setl cursorline
+    elseif g:netrw_cursor == 3
+    " thin-long-tree: cursorline, user's cursorcolumn
+    " wide          : cursorline, cursorcolumn
+    if w:netrw_liststyle == s:WIDELIST
+  "    call Decho("case g:netrw_cursor==3 and wide: setl cul cuc")
+      setl cursorline
+      setl cursorcolumn
+    else
+  "    call Decho("case g:netrw_cursor==3 and not wide: setl cul (use user's cuc)")
+      setl cursorline
+      let &l:cursorcolumn   = s:netrw_usercuc
+    endif
 
-  elseif g:netrw_cursor == 1
-   " thin-long-tree: user's cursorline, user's cursorcolumn
-   " wide          : cursorline,        user's cursorcolumn
-   let &l:cursorcolumn = s:netrw_usercuc
-   if w:netrw_liststyle == s:WIDELIST
-"    call Decho("case g:netrw_cursor==2 and wide: setl cul (use user's cuc)")
+    elseif g:netrw_cursor == 2
+    " thin-long-tree: cursorline, user's cursorcolumn
+    " wide          : cursorline, user's cursorcolumn
+  "   call Decho("case g:netrw_cursor==2: setl cuc (use user's cul)")
+    let &l:cursorcolumn = s:netrw_usercuc
     setl cursorline
-   else
-"    call Decho("case g:netrw_cursor==2 and not wide: (use user's cul,cuc)")
+
+    elseif g:netrw_cursor == 1
+    " thin-long-tree: user's cursorline, user's cursorcolumn
+    " wide          : cursorline,        user's cursorcolumn
+    let &l:cursorcolumn = s:netrw_usercuc
+    if w:netrw_liststyle == s:WIDELIST
+  "    call Decho("case g:netrw_cursor==2 and wide: setl cul (use user's cuc)")
+      setl cursorline
+    else
+  "    call Decho("case g:netrw_cursor==2 and not wide: (use user's cul,cuc)")
+      let &l:cursorline   = s:netrw_usercul
+    endif
+
+    else
+    " all styles: user's cursorline, user's cursorcolumn
+  "   call Decho("default: (use user's cul,cuc)")
     let &l:cursorline   = s:netrw_usercul
-   endif
-
-  else
-   " all styles: user's cursorline, user's cursorcolumn
-"   call Decho("default: (use user's cul,cuc)")
-   let &l:cursorline   = s:netrw_usercul
-   let &l:cursorcolumn = s:netrw_usercuc
+    let &l:cursorcolumn = s:netrw_usercuc
+    endif
   endif
 
 "  call Dret("s:NetrwCursor : l:cursorline=".&l:cursorline." l:cursorcolumn=".&l:cursorcolumn)
