@@ -2276,7 +2276,7 @@ fun! netrw#NetWrite(...) range
     if executable(curl)
      let url= g:netrw_choice
 "     call Decho("exe ".s:netrw_silentxfer."!".g:netrw_http_put_cmd." ".shellescape(tmpfile,1)." ".shellescape(url,1) )
-     exe s:netrw_silentxfer."!".g:netrw_http_put_cmd." ".shellescape(tmpfile,1)." ".shellescape(url,1) 
+     exe s:netrw_silentxfer."!".g:netrw_http_put_cmd." ".shellescape(tmpfile,1)." ".shellescape(url,1)
     elseif !exists("g:netrw_quiet")
      call netrw#ErrorMsg(s:ERROR,"can't write to http using <".g:netrw_http_put_cmd".">".",16)
     endif
@@ -2536,7 +2536,7 @@ fun! s:NetrwGetFile(readcmd, tfile, method)
   elseif !&ma
    " attempting to read a file after the current line in the file, but the buffer is not modifiable
    keepj call netrw#ErrorMsg(s:WARNING,"attempt to read<".a:tfile."> into a non-modifiable buffer!",94)
-"   call Dret("NetrwGetFile : attempt to read<".a:tfile."> into a non-modifiable buffer!") 
+"   call Dret("NetrwGetFile : attempt to read<".a:tfile."> into a non-modifiable buffer!")
    return
 
   elseif s:FileReadable(a:tfile)
@@ -2585,15 +2585,15 @@ endfun
 " Input:
 "   choice = url   [protocol:]//[userid@]hostname[:port]/[path-to-file]
 " Output:
-"  b:netrw_method= 1: rcp                                             
-"                  2: ftp + <.netrc>                                  
-"	           3: ftp + machine, id, password, and [path]filename 
-"	           4: scp                                             
-"	           5: http[s] (wget)                                     
+"  b:netrw_method= 1: rcp
+"                  2: ftp + <.netrc>
+"	           3: ftp + machine, id, password, and [path]filename
+"	           4: scp
+"	           5: http[s] (wget)
 "	           6: dav
-"	           7: rsync                                           
-"	           8: fetch                                           
-"	           9: sftp                                            
+"	           7: rsync
+"	           8: fetch
+"	           9: sftp
 "  g:netrw_machine= hostname
 "  b:netrw_fname  = filename
 "  g:netrw_port   = optional port number (for ftp)
@@ -3020,7 +3020,7 @@ fun! s:NetrwMaps(islocal)
    nnoremap <buffer> <silent> gd	:<c-u>call <SID>NetrwForceChgDir(1,<SID>NetrwGetWord())<cr>
    nnoremap <buffer> <silent> gf	:<c-u>call <SID>NetrwForceFile(1,<SID>NetrwGetWord())<cr>
    nnoremap <buffer> <silent> gh	:<c-u>call <SID>NetrwHidden(1)<cr>
-   nnoremap <buffer> <silent> gp	:<c-u>call <SID>NetrwChgPerm(1,b:netrw_curdir)<cr>
+   " nnoremap <buffer> <silent> gp	:<c-u>call <SID>NetrwChgPerm(1,b:netrw_curdir)<cr>
    nnoremap <buffer> <silent> I		:call <SID>NetrwBannerCtrl(1)<cr>
    nnoremap <buffer> <silent> i		:call <SID>NetrwListStyle(1)<cr>
    nnoremap <buffer> <silent> mb	:<c-u>call <SID>NetrwBookHistHandler(0,b:netrw_curdir)<cr>
@@ -3640,7 +3640,7 @@ fun! s:NetrwBrowse(islocal,dirname)
   endif
 
   " s:NetrwBrowse: save options: {{{3
-  call s:NetrwOptionSave("w:")                                                                                                            
+  call s:NetrwOptionSave("w:")
 
   " s:NetrwBrowse: re-instate any marked files {{{3
   if exists("s:netrwmarkfilelist_{bufnr('%')}")
@@ -4772,7 +4772,7 @@ fun! netrw#NetrwBrowseX(fname,remote)
   " usually have "kdeinit" running, though...  (tnx Mikolaj Machowski)
   if !exists("s:haskdeinit")
    if has("unix") && executable("ps") && !has("win32unix")
-    let s:haskdeinit= system("ps -e") =~ 'kdeinit' 
+    let s:haskdeinit= system("ps -e") =~ 'kdeinit'
     if v:shell_error
      let s:haskdeinit = 0
     endif
@@ -5214,7 +5214,7 @@ endfun
 " s:NetrwSLeftmouse: marks the file under the cursor.  May be dragged to select additional files {{{2
 fun! s:NetrwSLeftmouse(islocal)
 "  call Dfunc("s:NetrwSLeftmouse(islocal=".a:islocal.")")
-  
+
   let s:ngw= s:NetrwGetWord()
   call s:NetrwMarkFile(a:islocal,s:ngw)
 
@@ -5828,7 +5828,7 @@ fun! s:NetrwMarkFileCopy(islocal,...)
   if g:netrw_fastbrowse <= 1
    keepj call s:LocalBrowseShellCmdRefresh()
   endif
-  
+
 "  call Dret("s:NetrwMarkFileCopy 1")
   return 1
 endfun
@@ -5902,7 +5902,7 @@ fun! s:NetrwMarkFileEdit(islocal)
    exe "sil args ".flist
   endif
   echo "(use :bn, :bp to navigate files; :Rex to return)"
-  
+
 "  call Dret("s:NetrwMarkFileEdit")
 endfun
 
@@ -6004,7 +6004,7 @@ fun! s:NetrwMarkFileExe(islocal)
   else
    keepj call netrw#ErrorMsg(s:ERROR,"no files marked!",59)
   endif
-  
+
 "  call Dret("s:NetrwMarkFileExe")
 endfun
 
@@ -6119,7 +6119,7 @@ fun! s:NetrwMarkFileVimCmd(islocal)
   else
    keepj call netrw#ErrorMsg(s:ERROR,"no files marked!",59)
   endif
-  
+
 "  call Dret("s:NetrwMarkFileVimCmd")
 endfun
 
@@ -6363,7 +6363,7 @@ fun! s:NetrwMarkFileMove(islocal)
 "   call Decho("since g:netrw_fastbrowse=".g:netrw_fastbrowse.", perform shell cmd refresh")
    keepj call s:LocalBrowseShellCmdRefresh()
   endif
-  
+
 "  call Dret("s:NetrwMarkFileMove")
 endfun
 
@@ -6566,7 +6566,7 @@ endfun
 
 " ---------------------------------------------------------------------
 " s:NetrwMarkFileTgt:  (invoked by mt) This function sets up a marked file target {{{2
-"   Sets up two variables, 
+"   Sets up two variables,
 "     s:netrwmftgt         : holds the target directory
 "     s:netrwmftgt_islocal : 0=target directory is remote
 "                            1=target directory is local
@@ -6686,7 +6686,7 @@ fun! s:NetrwUnmarkList(curbufnr,curdir)
    if s:netrwmarkfilelist == []
     unlet s:netrwmarkfilelist
    endif
- 
+
    " getting rid of the local marked-file lists is easy
    unlet s:netrwmarkfilelist_{a:curbufnr}
   endif
@@ -6717,7 +6717,7 @@ fun! s:NetrwUnmarkAll2()
   let
   redir END
   let netrwmarkfilelist_list= split(netrwmarkfilelist_let,'\n')          " convert let string into a let list
-  call filter(netrwmarkfilelist_list,"v:val =~ '^s:netrwmarkfilelist_'") " retain only those vars that start as s:netrwmarkfilelist_ 
+  call filter(netrwmarkfilelist_list,"v:val =~ '^s:netrwmarkfilelist_'") " retain only those vars that start as s:netrwmarkfilelist_
   call map(netrwmarkfilelist_list,"substitute(v:val,'\\s.*$','','')")    " remove what the entries are equal to
   for flist in netrwmarkfilelist_list
    let curbufnr= substitute(flist,'s:netrwmarkfilelist_','','')
@@ -7255,7 +7255,7 @@ fun! s:NetrwRefreshDir(islocal,dirname)
     let curwin= winnr()
 "    call Decho("refresh tgtwin#".tgtwin." (curwin#".curwin.")")
     exe tgtwin."wincmd w"
-    keepj call s:NetrwRefresh(a:islocal,s:NetrwBrowseChgDir(a:islocal,'./')) 
+    keepj call s:NetrwRefresh(a:islocal,s:NetrwBrowseChgDir(a:islocal,'./'))
     exe curwin."wincmd w"
 
    elseif bufnr(a:dirname) > 0
@@ -8607,7 +8607,7 @@ fun! s:NetrwRemoteRename(usrhost,path) range
 "      call Decho("subfrom<".subfrom."> subto<".subto."> newname<".newname.">")
      endif
     endif
-   
+
     if exists("w:netrw_method") && (w:netrw_method == 2 || w:netrw_method == 3)
      keepj call s:NetrwRemoteFtpCmd(a:path,"rename ".oldname." ".newname)
     else
@@ -8966,10 +8966,10 @@ endfun
 " s:LocalFastBrowser: handles setting up/taking down fast browsing for the local browser {{{2
 "
 "     g:netrw_    Directory Is
-"     fastbrowse  Local  Remote   
+"     fastbrowse  Local  Remote
 "  slow   0         D      D      D=Deleting a buffer implies it will not be re-used (slow)
 "  med    1         D      H      H=Hiding a buffer implies it may be re-used        (fast)
-"  fast   2         H      H      
+"  fast   2         H      H
 "
 "  Deleting a buffer means that it will be re-loaded when examined, hence "slow".
 "  Hiding   a buffer means that it will be re-used   when examined, hence "fast".
@@ -9084,7 +9084,7 @@ fun! s:NetrwLocalRename(path) range
     call rename(oldname,newname)
    endfor
    call s:NetrwUnmarkList(bufnr("%"),b:netrw_curdir)
-  
+
   else
 
    " attempt to rename files/directories
@@ -9195,7 +9195,7 @@ endfun
 "                     Give confirmation prompt unless all==1
 fun! s:NetrwLocalRmFile(path,fname,all)
 "  call Dfunc("s:NetrwLocalRmFile(path<".a:path."> fname<".a:fname."> all=".a:all)
-  
+
   let all= a:all
   let ok = ""
   keepj norm! 0
@@ -9995,22 +9995,22 @@ fun! s:Strlen(x)
 
   if v:version >= 703 && exists("*strdisplaywidth")
    let ret= strdisplaywidth(a:x)
- 
+
   elseif type(g:Align_xstrlen) == 1
    " allow user to specify a function to compute the string length  (ie. let g:Align_xstrlen="mystrlenfunc")
    exe "let ret= ".g:Align_xstrlen."('".substitute(a:x,"'","''","g")."')"
- 
+
   elseif g:Align_xstrlen == 1
    " number of codepoints (Latin a + combining circumflex is two codepoints)
    " (comment from TM, solution from NW)
    let ret= strlen(substitute(a:x,'.','c','g'))
- 
+
   elseif g:Align_xstrlen == 2
    " number of spacing codepoints (Latin a + combining circumflex is one spacing
    " codepoint; a hard tab is one; wide and narrow CJK are one each; etc.)
    " (comment from TM, solution from TM)
    let ret=strlen(substitute(a:x, '.\Z', 'x', 'g'))
- 
+
   elseif g:Align_xstrlen == 3
    " virtual length (counting, for instance, tabs as anything between 1 and
    " 'tabstop', wide CJK as 2 rather than 1, Arabic alif as zero when immediately
@@ -10023,7 +10023,7 @@ fun! s:Strlen(x)
    d
    keepj norm! k
    let &l:mod= modkeep
- 
+
   else
    " at least give a decent default
     let ret= strlen(a:x)
